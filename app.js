@@ -14,7 +14,9 @@ mg.connect(
   'mongodb+srv://sergeynikolin:12345678Hh@cluster0.jhoh2wh.mongodb.net/blog',
 )
   .then(() => console.log('DB is ok'))
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.log('Errrror', err);
+  });
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
