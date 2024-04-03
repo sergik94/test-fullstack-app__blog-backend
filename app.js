@@ -10,19 +10,9 @@ const checkAuth = require('./utils/checkAuth');
 const UserController = require('./controllers/UserController');
 const PostController = require('./controllers/PostController');
 const handleValidationErrors = require('./utils/handleValidationErrors');
-const PORT = process.env.PORT || 5000;
-const MONGO_URI =
-  'mongodb+srv://sergeynikolin:12345678Hh@cluster0.jhoh2wh.mongodb.net/blog';
+const PORT = process.env.PORT || 3000;
 
-/* mg.connect(
-  'mongodb+srv://sergeynikolin:12345678Hh@cluster0.jhoh2wh.mongodb.net/blog',
-)
-  .then(() => console.log('DB is ok'))
-  .catch((err) => {
-    console.log('Errrror', err);
-  }); */
-
-const connectDB = async () => {
+/* const connectDB = async () => {
   try {
     const conn = await mg.connect(process.env.MONGO_URI || MONGO_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
@@ -30,7 +20,7 @@ const connectDB = async () => {
     console.log(error);
     process.exit(1);
   }
-};
+}; */
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -98,12 +88,19 @@ app.delete('/posts/:postId', checkAuth, PostController.remove);
   console.log('Server OK');
 }); */
 
-connectDB().then(() => {
-  app.listen(PORT, (err) => {
-    if (err) {
-      console.log(err);
-    }
+mg.connect(
+  'mongodb+srv://sergeynikolin:12345678Hh@cluster0.jhoh2wh.mongodb.net/blog',
+)
+  .then(() => {
+    console.log('DB is ok');
+    app.listen(PORT, (err) => {
+      if (err) {
+        console.log(err);
+      }
 
-    console.log('Server OK');
+      console.log('Server OK');
+    });
+  })
+  .catch((err) => {
+    console.log('Errrror', err);
   });
-});
