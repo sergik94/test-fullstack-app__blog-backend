@@ -11,7 +11,8 @@ const getAll = async (req, res) => {
 
     res.json(posts);
   } catch (error) {
-    console.log(error);
+    console.log('Errror', error);
+    console.log('PostModel', PostModel);
     res.status(500).json({
       message: 'Posts are not found',
     });
